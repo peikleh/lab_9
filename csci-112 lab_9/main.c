@@ -14,7 +14,7 @@ struct llist{
 }
 linkedl;
     void print_list(linkedl * first_ptr);
-linkedl * inorder_insert(linkedl * original, linkedl *new_value_ptr, linkedl * previous_ptr,linkedl * start_ptr);
+int inorder_insert(linkedl * original,linkedl *next, char letter, linkedl *previous);
 
 void print_list(linkedl * listptr) {
 	// recursive step:
@@ -27,24 +27,22 @@ void print_list(linkedl * listptr) {
 
 
 
-linkedl * inorder_insert(linkedl * original, linkedl *new_value_ptr, linkedl * previous_ptr, linkedl * start_ptr){
-    if(original==NULL && previous_ptr==NULL){
-        return new_value_ptr;
-    }else if(original==NULL && previous_ptr!=NULL){
-        original->tail= new_value_ptr;
-        return start_ptr;
-    }else if(original->head >= new_value_ptr->head){
-        if(previous_ptr==NULL){
-            new_value_ptr->tail=original;
-            return new_value_ptr;
-        }else{
-            previous_ptr->tail==new_value_ptr;
-            new_value_ptr->tail=original;
-            
-            return start_ptr;
-        }
-    }else inorder_insert(original->tail, new_value_ptr, original, start_ptr);
-    return original;
+int inorder_insert(linkedl * original, linkedl * next, char letter, linkedl *previous){
+    if(original->head=='0' && original->tail==NULL){
+        linkedl *new_head=malloc(sizeof(linkedl));
+        new_head->head=letter;
+        new_head->tail=NULL;
+        return 0;
+        
+    }else if(original->head>=letter){
+        linkedl *new_list=malloc(sizeof(linkedl));
+        new_list->head=letter;
+        new_list->tail=next;
+        previous->tail=new_list;
+        
+        return 0;
+    }
+
     
 }
 
@@ -53,12 +51,8 @@ linkedl * inorder_insert(linkedl * original, linkedl *new_value_ptr, linkedl * p
 
 
 int main() {
-    linkedl a = {'a', NULL};
-        linkedl b = {'b', NULL};
-   linkedl *masterlist= inorder_insert(NULL,&a, NULL, NULL) ;
-   print_list(masterlist);
-    masterlist= inorder_insert(masterlist,&b, NULL, masterlist) ;
-   print_list(masterlist);
-    return (EXIT_SUCCESS);
+    linkedl alph  = {'0', NULL};
+   alph= inorder_insert(&alph,NULL , 'a', NULL);
+   print_list(&(alph));
 }
 
